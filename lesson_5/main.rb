@@ -2,13 +2,6 @@
 Добавить текстовый интерфейс:
 
 Создать программу в файле main.rb, которая будет позволять пользователю через текстовый интерфейс делать следующее:
-     - Создавать станции
-     - Создавать поезда
-     - Создавать маршруты и управлять станциями в нем (добавлять, удалять)
-     - Назначать маршрут поезду
-     - Добавлять вагоны к поезду
-     - Отцеплять вагоны от поезда
-     - Перемещать поезд по маршруту вперед и назад
      - Просматривать список станций и список поездов на станции
 =end
 
@@ -37,5 +30,19 @@ loop do
     railway.create_station
   when 2
     railway.create_train
+  when 3
+    railway.route_management
+  when 4
+    railway.train_set_route
+  when 5
+    railway.train_add_wagon
+  when 6
+    railway.train_delete_wagon
+  when 7
+    railway.move_train
+  when 8
+    railway.stations_info
+  else
+    break
   end
 end

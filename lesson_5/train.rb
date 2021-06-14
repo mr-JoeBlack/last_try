@@ -7,6 +7,10 @@ class Train
     @speed = 0
   end
 
+  def wagons_list
+    wagons.each_with_index(1) { |wagon, index| puts "#{index} - #{wagon.number}" }
+  end
+
   def increase_speed(speed)
     self.speed += speed
   end
@@ -23,7 +27,7 @@ class Train
     wagons << wagon if stopped? && wagon.type == self.type
   end
 
-  def del_wagon(wagon)
+  def delete_wagon(wagon)
     wagons.delete(wagon) if stopped? && wagons.include?(wagon)
   end
 
