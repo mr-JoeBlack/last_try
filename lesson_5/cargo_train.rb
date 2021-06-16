@@ -1,5 +1,5 @@
 class CargoTrain < Train
-  def initialize(number, wagons_count = 0)
+  def initialize(number)
     super
 
     @type = :cargo

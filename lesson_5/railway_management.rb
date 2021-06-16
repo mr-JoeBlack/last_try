@@ -24,15 +24,15 @@ class RailwayManagement
   end
 
   def stations_list
-    stations.each_with_index(1) { |station, index| puts "#{index} - #{station.name}" }
+    stations.each.with_index(1) { |station, index| puts "#{index} - #{station.name}" }
   end
 
   def trains_list
-    trains.each_with_index(1) { |train, index| puts "#{index} - #{train.number}" }
+    trains.each.with_index(1) { |train, index| puts "#{index} - #{train.number}" }
   end
 
   def routes_list
-    routes.each_with_index(1) { |route, index| puts "#{index} - #{route.name}" }
+    routes.each.with_index(1) { |route, index| puts "#{index} - #{route.name}" }
   end
 
   def select_station
@@ -50,7 +50,7 @@ class RailwayManagement
   def select_route
     routes_list
 
-    routes[gets.chomp.to_i]
+    routes[gets.chomp.to_i - 1]
   end
 
   def create_station

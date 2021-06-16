@@ -8,7 +8,7 @@ class Train
   end
 
   def wagons_list
-    wagons.each_with_index(1) { |wagon, index| puts "#{index} - #{wagon.number}" }
+    wagons.each.with_index(1) { |wagon, index| puts "#{index} - #{wagon.number}" }
   end
 
   def increase_speed(speed)
@@ -34,9 +34,9 @@ class Train
   def set_route(route)
     self.route = route
 
-    station = route.stations.first
+    self.station = route.stations.first
 
-    station.receive_train
+    self.station.receive_train(self)
   end
 
   def previous_station
@@ -48,22 +48,22 @@ class Train
   end
 
   def forward
-    station.send_train(self)
+    self.station.send_train(self)
 
     self.station = next_station
 
-    station.receive_train(self)
+    self.station.receive_train(self)
   end
 
   def backward
-    station.send_train(self)
+    self.station.send_train(self)
 
     self.station = previous_station
 
-    station.receive_train(self)
+    self.station.receive_train(self)
   end
 
   protected
 
-  attr_writer :speed, :wagons_count, :route, :station
+  attr_writer :speed, :route, :station
 end
