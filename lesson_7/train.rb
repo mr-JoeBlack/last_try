@@ -90,6 +90,6 @@ class Train
   attr_writer :speed, :route, :station
 
   def validate!
-    raise 'Неверный формат номера' if number !~ NUMBER_FORMAT
+    raise "Неверный формат номера" if number !~ NUMBER_FORMAT
   end
 end

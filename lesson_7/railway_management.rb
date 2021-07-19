@@ -84,8 +84,8 @@ class RailwayManagement
     end
 
     puts "Создан поезд №#{number}"
-  rescue RuntimeError
-    puts "Ошибка создания поезда: указанный номер #{number} не валидный"
+  rescue RuntimeError => e
+    puts "Ошибка создания поезда: #{e.message}"
 
     retry
   end
