@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'manufacturer'
 require_relative 'instance_counter'
 require_relative 'validation'
@@ -7,13 +9,17 @@ class Train
   include InstanceCounter
   include Validation
 
-  @@trains = {}
+  @trains = {}
 
-  def self.find(number)
-    @@trains[number]
+  class << self
+    attr_reader :trains
   end
 
-  NUMBER_FORMAT = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
+  def self.find(number)
+    @trains[number]
+  end
+
+  NUMBER_FORMAT = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i.freeze
 
   attr_reader :number, :speed, :wagons, :route, :station, :type
 
@@ -24,7 +30,7 @@ class Train
 
     validate!
 
-    @@trains[number] = self
+    self.class.trains[number] = self
 
     register_instance
   end
@@ -53,7 +59,7 @@ class Train
     wagons.delete(wagon) if stopped? && wagons.include?(wagon)
   end
 
-  def set_route(route)
+  def add_route(route)
     self.route = route
 
     self.station = route.stations.first

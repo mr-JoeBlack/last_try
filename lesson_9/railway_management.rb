@@ -69,7 +69,7 @@ class RailwayManagement
 
       type = gets.chomp.to_i
 
-      raise ArgumentError until (1..2).include?(type)
+      raise ArgumentError if [1, 2].index(type).nil?
     rescue ArgumentError
       puts 'Ошибка создания поезда: неверно указан тип'
 
@@ -104,30 +104,39 @@ class RailwayManagement
 
     puts "Создан маршрут #{route.name}"
 
+    stations_management(route)
+  end
+
+  def stations_management(route)
     loop do
       puts 'Выберите дальнейшее действие: 1 - добавить станцию, 2 - удалить станцию, 0 - возврат к предыдущему меню'
 
       case gets.chomp.to_i
-
-      when 0
-        break
       when 1
-        puts 'Выберите добавляемую станцию'
-
-        station = select_station
-        route.add_station(station)
-
-        puts "К маршруту #{route.name} добавлена промежуточная станция #{station.name}"
+        route_add_station(route)
       when 2
-        puts 'Выберите удаляемую станцию:'
-
-        route.stations_list
-        station = route.stations[gets.chomp.to_i - 1]
-        route.remove_station(station)
+        route_remove_station(route)
       else
         break
       end
     end
+  end
+
+  def route_add_station(route)
+    puts 'Выберите добавляемую станцию'
+
+    station = select_station
+    route.add_station(station)
+
+    puts "К маршруту #{route.name} добавлена промежуточная станция #{station.name}"
+  end
+
+  def route_remove_station(route)
+    puts 'Выберите удаляемую станцию:'
+
+    route.stations_list
+    station = route.stations[gets.chomp.to_i - 1]
+    route.remove_station(station)
   end
 
   def train_set_route
@@ -137,7 +146,7 @@ class RailwayManagement
 
     route = select_route
 
-    train.set_route(route)
+    train.add_route(route)
   end
 
   def train_add_wagon
@@ -149,18 +158,26 @@ class RailwayManagement
 
     case train.type
     when :passenger
-      puts 'Введите количество мест в вагоне'
-
-      seats = gets.chomp.to_i
-
-      train.add_wagon(PassengerWagon.new(number, seats))
+      add_passenger_wagon(train, number)
     when :cargo
-      puts 'Введите объем вагона'
-
-      capacity = gets.chomp.to_f
-
-      train.add_wagon(CargoWagon.new(number, capacity))
+      add_cargo_wagon(train, number)
     end
+  end
+
+  def add_passenger_wagon(train, number)
+    puts 'Введите количество мест в вагоне'
+
+    seats = gets.chomp.to_i
+
+    train.add_wagon(PassengerWagon.new(number, seats))
+  end
+
+  def add_cargo_wagon(train, number)
+    puts 'Введите объем вагона'
+
+    capacity = gets.chomp.to_f
+
+    train.add_wagon(CargoWagon.new(number, capacity))
   end
 
   def train_delete_wagon

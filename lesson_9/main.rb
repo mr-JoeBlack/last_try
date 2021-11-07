@@ -19,8 +19,6 @@ loop do
 
   case gets.chomp.to_i
 
-  when 0
-    break
   when 1
     railway.create_station
   when 2
