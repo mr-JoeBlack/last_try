@@ -2,6 +2,7 @@
 
 require_relative 'instance_counter'
 require_relative 'validation'
+require_relative 'station'
 
 class Route
   include InstanceCounter
